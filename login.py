@@ -21,14 +21,21 @@ def load_data(path):
 
     return data
 
-
-
+def check_if_unique(data,user):
+    for u in data:
+        if u['username'] == user:
+            return True
+    else:
+        return False
 
 def enter_credentials():
     USERDETAILS = load_data(path)
     user = input('Enter a username: ')
+    if check_if_unique(USERDETAILS,user):
+        print('User taken, please enter again')
+        return enter_credentials()
     password = input('Enter a password: ')
-    USERDETAILS.append({'user':user,'password_hash':password})
+    USERDETAILS.append({'username':user,'password_hash':password})
 
     save_data(path,USERDETAILS)
     print(USERDETAILS)
