@@ -1,6 +1,7 @@
-
+import hashlib
 import json
 path = r'C:\Users\Sulaiman\Desktop\Pythonprojects\loginsystem\venv\data.json'
+
 
 def save_data(path, data):
     """
@@ -21,36 +22,38 @@ def load_data(path):
 
     return data
 
-def check_if_unique(data,user):
+
+def check_if_unique(data, user):
     for u in data:
         if u['username'] == user:
             return True
     else:
         return False
 
+
 def enter_credentials():
-    USERDETAILS = load_data(path)
+    userdetails = load_data(path)
     user = input('Enter a username: ')
-    if check_if_unique(USERDETAILS,user):
+    if check_if_unique(userdetails, user):
         print('User taken, please enter again')
         return enter_credentials()
     password = input('Enter a password: ')
-    USERDETAILS.append({'username':user,'password_hash':password})
+    password_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
+    userdetails.append({'username': user, 'password_hash': password_hash})
 
-    save_data(path,USERDETAILS)
-    print(USERDETAILS)
+    save_data(path, userdetails)
+    print(userdetails)
 
-def is_valid_credentials(user,password):
-    USERDETAILS = load_data(path)
-    if USERDETAILS.get(user,None) == password:
-        return True
+
+def is_valid_credentials(user, password):
+    password_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
+    userdetails = load_data(path)
+    for u in userdetails:
+        if u['username'] == user and u['password_hash'] == password_hash:
+            return True
     return False
-
-
-
 
 
 
 if __name__ == '__main__':
     enter_credentials()
-
