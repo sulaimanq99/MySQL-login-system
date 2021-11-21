@@ -53,7 +53,23 @@ def is_valid_credentials(user, password):
             return True
     return False
 
-
+def login():
+    user = input('Enter username: ')
+    password = input('Enter password: ')
+    if is_valid_credentials(user, password):
+        print('Logged in')
+        return
+    else:
+        print('Invalid combination, please try again')
+        return login()
 
 if __name__ == '__main__':
-    enter_credentials()
+    while True:
+        choice = input('Enter 1 to add new users or 2 to login: ')
+        if choice == '1':
+            enter_credentials()
+        elif choice == '2':
+            login()
+            break
+
+
