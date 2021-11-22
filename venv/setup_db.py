@@ -6,11 +6,15 @@ def main():
                             user='sulaiman',
                             password='12345')
     mycursor = db.cursor()
-    user = 'sid'
+    user = 'robert'
+    password_hash = 'ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f'
     mycursor.execute("SELECT count(*) from users WHERE username=%s", (user,))
     #mycursor.execute('INSERT INTO users (username, password_hash) VALUES("sulaiman", "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f")')
     #db.commit()
     print(list(k for k in mycursor)[0][0])
+    mycursor.execute("SELECT * FROM users WHERE username=%s and password_hash=%s", (user, password_hash))
+    if not list(k for k in mycursor):
+         print(False)
     #mycursor.execute("CREATE DATABASE login_system")
     #mycursor.execute('DROP TABLE users')
     #mycursor.execute("CREATE TABLE users (username VARCHAR(255) UNIQUE , password_hash VARCHAR(255))")

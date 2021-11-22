@@ -14,6 +14,22 @@ def enter_credentials(cursor):
     mycursor.execute("INSERT INTO users (username, password_hash) VALUES (%s, %s)", (user, password_hash))
     db.commit()
 
+def is_valid_credentials(user, password):
+    password_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
+    mycursor.execute("SELECT * FROM users WHERE username=%s and password_hash=%s", (user, password_hash))
+    if not list(k for k in mycursor):
+         return False
+    return True
+
+def login():
+    user = input('Enter username: ')
+    password = input('Enter password: ')
+    if is_valid_credentials(user, password):
+        print('Logged in')
+        return
+    else:
+        print('Invalid combination, please try again')
+        return login()
 
 
 if __name__ == '__main__':
