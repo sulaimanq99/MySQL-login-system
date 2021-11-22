@@ -1,6 +1,11 @@
 import mysql.connector
 import hashlib
 
+db = mysql.connector.connect(host='localhost',
+                                 database='login_system',
+                                 user='sulaiman',
+                                 password='12345')
+mycursor = db.cursor()
 
 def enter_credentials(cursor):
     user = input('Enter a username: ')
@@ -33,11 +38,6 @@ def login():
 
 
 if __name__ == '__main__':
-    db = mysql.connector.connect(host='localhost',
-                                 database='login_system',
-                                 user='sulaiman',
-                                 password='12345')
-    mycursor = db.cursor()
 
     while True:
         choice = input('Enter 1 to register or 2 to login: ')
